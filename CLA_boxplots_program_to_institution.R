@@ -3,19 +3,25 @@
 
 source("CLA_boxplots_setup.R")
 
-# choose what to plot
+# CHOOSE PROGRAM ----------------------------------------------------------
 df <- dram
 prog_name <- "Drama"
+dummy <- dummy_2 %>% mutate(Subject = "DRAM")
 
 df <- psyc
 prog_name <- "Psychology"
+dummy <- fix
 
 df <- phys
 prog_name <- "Physics"
+dummy <- dummy_2 %>% mutate(Subject = "PHYS")
 
 df <- eng
 prog_name <- "Engineering"
+dummy <- fix
 
+
+# CREATE BOXPLOTS ---------------------------------------------------------
 
 #calculate sample sizes:
 n_1 <-  sum(with(df, class == 1 & score_total >= 1), na.rm = TRUE)     
@@ -27,7 +33,7 @@ year3 <- paste0("Third Year\nn = ", n_3, "   n = ", n_q_3) #text string for xlab
 n_4 <-  sum(with(df, class == 4 & score_total >= 1), na.rm = TRUE)     
 year4 <- paste0("Fourth Year\nn = ", n_4, "   n = ", 0) #text string for xlabel
 
-df <- rbind(df, queens, fix) # combine with all queens data
+df <- rbind(df, queens, fix, dummy) # combine with all queens data
 graph_title <- paste0(prog_name, " CLA Scores") # graph title
 
 ## plot description
@@ -47,7 +53,7 @@ ggplot(
   scale_fill_manual(
     values =  c("darkgoldenrod1", "steelblue3"),
     labels = c(prog_name, "Queen's")
-  )+
+    )+
   theme(
     panel.border = element_rect(colour = "grey", fill = NA), #add border around graph
     panel.background = element_rect("white"), #change background colour
@@ -59,7 +65,7 @@ ggplot(
     axis.title.x = element_blank(), # remove x axis title
     axis.title.y = element_text(size = 14),
     axis.text = element_text(size = 12) #size of x axis labels
-  ) +
+    ) +
   annotate( # add labels for CLA mastery levels
     "text", 
     fontface = "bold", 
@@ -69,24 +75,3 @@ ggplot(
     label = c("Below Basic", "Basic", "Proficient", "Accomplished", "Advanced", "CLA Mastery Levels"), 
     colour = "red"
     ) 
-
-
-# adjust box width for 4th year
-dd<-ggplot_build(p) # characteristics of plot
-
-#missing 4th year
-dd$data[[2]]$xmin[5]<-4 # fix width of 4th box
-dd$data[[2]]$x[5]<-4.09375 # move whisker to middle of 4th box
-
-#missing 2nd and 4th year
-dd$data[[2]]$xmin[3]<-2 # fix width of 2nd box
-dd$data[[2]]$x[3]<-2.09375 # move whisker to middle of 2nd box
-dd$data[[2]]$xmin[4]<-4 # fix width of 4th box
-dd$data[[2]]$x[4]<-4.09375 # move whisker to middle of 4th box
-
-#engineering - no 4th year institutional level
-dd$data[[2]]$xmax[5]<-4 # fix width of 4th box
-dd$data[[2]]$x[5]<-3.90625 # move whisker to middle of 4th box
-
-
-grid.draw(ggplot_gtable(dd)) # plot new graph
