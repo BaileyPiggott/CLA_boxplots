@@ -8,6 +8,9 @@ library(grid)# load libraries
 
 ## data
 cla = read.csv("Consenting CLA+ Data.csv") # scores
+cla <- cla %>% filter(time_pt > 5 & effort_pt >1) # remove students that spent too little time on pt section, AND reported lowest effort
+
+
 cla <- cla[c("studentid", "class","score_total", "major_primary")] #keep only important columns
 dram100_list = read.csv("DRAMA 100 Class List.csv")
 psyc100_list = read.csv("PSYC 100 Class List.csv")

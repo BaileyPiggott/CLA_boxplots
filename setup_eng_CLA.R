@@ -14,6 +14,8 @@ ids = read.csv("Engineering Student Info.csv") #identification
 
 #merge data frames together
 eng_cla <- merge(scores, ids, by = c("year", "studentid")) # year and student id are the only common variables between dataframes
+eng_cla <- eng_cla %>% filter(time_pt > 5 & effort_pt >1) # remove students that spent too little time on pt section, AND reported lowest effort
+
 eng_cla <- eng_cla[c("studentid", "score_total", "semester", "plan", "course")] #keep only important columns
 eng_cla <- eng_cla %>% mutate(year = ceiling(semester/2)) %>% arrange(plan)#add column with year calculated from semester
 

@@ -1,6 +1,6 @@
 # CLA boxplots by engineering discipline
 
-source("setup_eng_CLA.R")
+source("setup_eng_CLA.R") #MUST RUN EVERY TIME... eng_vs_artsci USES SOME OF THE SAME VARIABLE NAMES
 
 # CHOOSE DISICPLINE -------------------------------------------------------
 
