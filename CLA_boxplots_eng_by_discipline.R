@@ -6,9 +6,11 @@ source("setup_eng_CLA.R") #MUST RUN EVERY TIME... eng_vs_artsci USES SOME OF THE
 
   df = mech
   disc_name = "Mechanical Engineering" # text string for title and legend
+  dummy <- fix
 
   df = elec
   disc_name = "Electrical Engineering"
+  dummy <- fix
 
   df = cmpe
   disc_name = "Computer Engineering"
@@ -16,9 +18,11 @@ source("setup_eng_CLA.R") #MUST RUN EVERY TIME... eng_vs_artsci USES SOME OF THE
 
   df = civl
   disc_name = "Civil Engineering"
+  dummy <- fix
 
   df = chem
   disc_name = "Chemical Engineering"
+  dummy <- fix
 
   df = ench
   disc_name = "Engineering Chemistry"
@@ -30,6 +34,7 @@ source("setup_eng_CLA.R") #MUST RUN EVERY TIME... eng_vs_artsci USES SOME OF THE
 
   df = geoe
   disc_name = "Geological Engineering"
+  dummy <- fix
 
   df = enph
   disc_name = "Engineering Physics"

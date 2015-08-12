@@ -8,12 +8,13 @@ library(magrittr)
 library(grid)# load libraries
 
 ## data
-scores = read.csv("Engineering CLA+ data.csv") # scores
+scores = read.csv("Consenting CLA+ Data.csv")
+#scores = read.csv("Engineering CLA+ data.csv") # scores
 ids = read.csv("Engineering Student Info.csv") #identification
 
 
 #merge data frames together
-eng_cla <- merge(scores, ids, by = c("year", "studentid")) # year and student id are the only common variables between dataframes
+eng_cla <- inner_join(scores, ids, by = c("year", "studentid")) # year and student id are the only common variables between dataframes
 eng_cla <- eng_cla %>% filter(time_pt > 5 & effort_pt >1) # remove students that spent too little time on pt section, AND reported lowest effort
 
 eng_cla <- eng_cla[c("studentid", "score_total", "semester", "plan", "course")] #keep only important columns
@@ -21,10 +22,8 @@ eng_cla <- eng_cla %>% mutate(year = ceiling(semester/2)) %>% arrange(plan)#add 
 
 first_year <- eng_cla %>% subset(semester <= 2) #first year scores
 
-
-#separate into disciplines
-# subset by dicsipline in "plan" column, then add first years with matching student numbers
-
+#separate into disciplines --------------------------------
+# subset by discipline in "plan" column, then add first years with matching student numbers
 
 fix <- data.frame(c(1,2,3,4),  c(10,10,10,10),c(NA,NA,NA,NA),c(NA,NA,NA,NA),c(NA,NA,NA,NA), c(1,2,3,4))
 colnames(fix) <- colnames(eng_cla)
@@ -79,7 +78,7 @@ mthe<- eng_cla %>% subset(plan == "MTHE-M-BSE") #second and fourth year scores
 first_year_mthe <- semi_join(first_year, mthe, by = "studentid") #first years with matching ids
 mthe <- rbind(mthe, first_year_mthe) %>% mutate(plan = "MTHE")
 
-# all eng 
+# all eng ----------------------------------------------
 all_eng <- eng_cla %>% mutate(plan = "z_ENG") 
 
 # all eng sample sizes:
