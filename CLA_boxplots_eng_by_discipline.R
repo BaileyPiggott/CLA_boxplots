@@ -38,7 +38,7 @@ source("setup_eng_CLA.R") #MUST RUN EVERY TIME... eng_vs_artsci USES SOME OF THE
 
   df = enph
   disc_name = "Engineering Physics"
-  dummy <- bind_rows(dummy_1, dummy_2) %>% mutate(plan = "ENPH")
+  dummy <- bind_rows(dummy_2) %>% mutate(plan = "ENPH")
 
   df = mthe
   disc_name = "Math and Engineering"
